@@ -198,3 +198,18 @@ server {
     }
 }
 ```
+
+
+## Assets Caching
+
+```nginx
+server {
+
+    ...
+
+    location ~* \.(css|js|png|jpg|jpeg|gif|svg|ico|webp)$ {
+        expires 7d;
+        add_header Cache-Control "public";
+    }
+}
+```
