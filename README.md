@@ -166,3 +166,35 @@ https://YOUR_IP
 
 > Your browser will show a **"Not Secure"** warning — this is expected with a self-signed certificate.
 
+## Redirect http to https :
+
+```nginx
+server {
+    listen 80;
+    listen [::]:80;
+
+    server_name domain.com www.domain.com;
+
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 443 ssl default_server;
+    listen [::]:443 ssl default_server;
+
+    server_name domain.com www.domain.com;
+
+    ssl_certificate /etc/ssl/certs/selfsigned_poc_hello_world_webpage.crt;
+    ssl_certificate_key /etc/ssl/private/selfsigned_poc_hello_world_webpage.key;
+
+    ssl_protocols TLSv1.2 TLSv1.3;
+
+    # LIGHT HOMEPAGE
+    root /var/www/domain;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}
+```
