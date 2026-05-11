@@ -1,6 +1,6 @@
 # Minimal Self-Hosted Website on a VPS
 
-## 🔐 Open Required Ports
+## Open Required Ports
 
 ```bash
 ufw allow OpenSSH
@@ -107,10 +107,28 @@ nano /etc/nginx/sites-available/hello
 
 Paste:
 
+For http:
 ```nginx
 server {
     listen 80 default_server;
     listen [::]:80 default_server;
+
+    root /var/www/hello;
+    index index.html;
+
+    server_name _;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}
+```
+
+For https (SSL):
+```nginx
+server {
+    listen 443 default_server;
+    listen [::]:443 default_server;
 
     root /var/www/hello;
     index index.html;
@@ -125,7 +143,6 @@ server {
     }
 }
 ```
-
 ---
 
 ## Enable Site
@@ -149,13 +166,3 @@ https://YOUR_IP
 
 > Your browser will show a **"Not Secure"** warning — this is expected with a self-signed certificate.
 
----
-
-## Done!
-
-You now have a minimal self-hosted website running on your VPS 🚀
-
-```
-
-If you want, I can also turn this into a **README.md with badges, diagrams, or a one-command setup script**.
-```
