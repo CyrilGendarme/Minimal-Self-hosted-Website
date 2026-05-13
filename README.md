@@ -99,6 +99,18 @@ openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
 
 ---
 
+## Let's Encrypt Certificate
+
+### Generate certificate
+
+```bash
+sudo apt update
+sudo apt install certbot python3-certbot-nginx
+sudo certbot --nginx -d popuri.fm -d www.popuri.fm
+```
+
+---
+
 ## Configure Nginx for IP Access
 
 ```bash
